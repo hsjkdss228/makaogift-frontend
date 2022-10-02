@@ -1,8 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+
+import { MemoryRouter } from 'react-router-dom';
+
 import App from './App';
 
 test('App', () => {
-  render(<App />);
-
-  screen.getByText(/기억보단 기록을/);
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>,
+  );
 });
