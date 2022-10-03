@@ -8,7 +8,7 @@ export default function Header() {
         <Link to="/">
           홈
         </Link>
-        <Link to="/">
+        <Link to="/products">
           스토어
         </Link>
         <Link to="/">
