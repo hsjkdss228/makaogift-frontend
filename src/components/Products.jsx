@@ -24,7 +24,10 @@ export default function Products() {
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              <Link to={`/products/${product.id}`}>
+              <Link
+                to={`/products/${product.id}`}
+                state={{ productId: product.id }}
+              >
                 <p>{product.maker}</p>
                 <p>{product.name}</p>
                 <p>

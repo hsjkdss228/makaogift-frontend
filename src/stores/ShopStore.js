@@ -3,8 +3,13 @@ import { apiService } from '../services/ApiService';
 export default class ShopStore {
   constructor() {
     this.products = [];
-
+    this.product = {};
     this.listeners = new Set();
+  }
+
+  async fetchProduct(id) {
+    this.product = await apiService.fetchProduct(id);
+    this.publish();
   }
 
   async fetchProducts() {

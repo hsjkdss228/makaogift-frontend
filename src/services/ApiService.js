@@ -7,6 +7,13 @@ import config from '../config';
 const { apiBaseUrl } = config;
 
 export default class ApiService {
+  async fetchProduct(id) {
+    const url = `${apiBaseUrl}/products/${id}`;
+    const { data } = await axios.get(url);
+    const { product } = data;
+    return product;
+  }
+
   async fetchProducts() {
     const url = `${apiBaseUrl}/products`;
     const { data } = await axios.get(url);
