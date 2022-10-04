@@ -10,8 +10,8 @@ export default class ApiService {
   async fetchProduct(id) {
     const url = `${apiBaseUrl}/products/${id}`;
     const { data } = await axios.get(url);
-    const { product } = data;
-    return product;
+    const products = data;
+    return products;
   }
 
   async fetchProducts() {

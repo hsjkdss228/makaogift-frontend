@@ -6,7 +6,7 @@ const context = describe;
 //   },
 // }));
 
-// describe('ShopStore', () => {
+// describe('ProductStore', () => {
 //   context('상품 목록 조회', () => {
 //     it('상품이 존재하지 않는 경우', () => {
 //       jest.mock('../services/ApiService', async () => ({
@@ -17,7 +17,7 @@ const context = describe;
 //         },
 //       }));
 
-//       const shopStore = new ShopStore();
+//       const shopStore = new ProductStore();
 
 //       shopStore.fetchProducts();
 
@@ -39,7 +39,7 @@ context('상품 목록 조회', () => {
     //   },
     // }));
 
-    // const shopStore = new ShopStore();
+    // const shopStore = new ProductStore();
 
     // await shopStore.fetchProducts();
 
@@ -53,7 +53,7 @@ context('상품 목록 조회', () => {
 
 // context('상품 목록 조회', () => {
 //   it('상품이 9개 이상 존재하는 경우', () => {
-//     const shopStore = new ShopStore();
+//     const shopStore = new ProductStore();
 
 //     shopStore.fetchProducts();
 

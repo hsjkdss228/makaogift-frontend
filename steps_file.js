@@ -1,10 +1,37 @@
-// in this file you can append custom step methods to 'I' object
+const backdoorBaseUrl = 'http://localhost:8000/backdoor';
 
-module.exports = function () {
-  return actor({
+module.exports = () => actor({
+  resetProducts() {
+    this.amOnPage(`${backdoorBaseUrl}/reset-products`);
+  },
 
-    // Define custom steps here, use 'this' to access default methods of I.
-    // It is recommended to place a general 'login' function here.
+  setupProduct({
+    id, maker, name, price, description,
+  }) {
+    this.amOnPage([
+      backdoorBaseUrl,
+      '/setup-product',
+      `?id=${id}`,
+      `&maker=${maker}`,
+      `&name=${name}`,
+      `&price=${price}`,
+      `&description=${description}`,
+    ].join(''));
+  },
 
-  });
-};
+  setupProducts({ count }) {
+    this.amOnPage([
+      backdoorBaseUrl,
+      '/setup-products',
+      `?count=${count}`,
+    ].join(''));
+  },
+
+  clickNTimes({ target, times }) {
+    const iteration = Array(times).fill(0);
+
+    iteration.forEach(() => {
+      this.click(target);
+    });
+  },
+});

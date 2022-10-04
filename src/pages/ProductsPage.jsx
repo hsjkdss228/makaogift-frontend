@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 
-import useShopStore from '../hooks/useShopStore';
+import useProductStore from '../hooks/useProductStore';
 
 import Products from '../components/Products';
 
 export default function ProductsPage() {
-  const shopStore = useShopStore();
+  const productStore = useProductStore();
 
   useEffect(() => {
-    shopStore.fetchProducts();
+    productStore.fetchProducts();
+    productStore.resetCountAndCost();
   }, []);
 
   return (

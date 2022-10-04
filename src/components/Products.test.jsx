@@ -1,21 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 
-import { shopStore } from '../stores/ShopStore';
+import { productStore } from '../stores/ProductStore';
 
 import Products from './Products';
 
 jest.mock('react-router-dom', () => ({
-  Link({ children, to }) {
-    return (
-      <a href={to}>
-        {children}
-      </a>
-    );
-  },
+  useNavigate: jest.fn(),
 }));
 
 test('Products', async () => {
-  shopStore.fetchProducts();
+  productStore.fetchProducts();
 
   render(<Products />);
 
