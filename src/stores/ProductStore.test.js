@@ -1,65 +1,96 @@
+import ProductStore from './ProductStore';
+
 const context = describe;
 
-// jest.mock('../services/ApiService', () => ({
-//   apiService: {
-//     fetchProducts: mockFetehProducts,
-//   },
-// }));
+jest.mock('../services/PagingService', () => ({
+  pagingService: {
+    calculatePageCount: ({ pageSize, totalProductsSize }) => {
+      if (pageSize === 1 && totalProductsSize === 3) {
+        return 1;
+      }
 
-// describe('ProductStore', () => {
-//   context('상품 목록 조회', () => {
-//     it('상품이 존재하지 않는 경우', () => {
-//       jest.mock('../services/ApiService', async () => ({
-//         apiService: {
-//           async fetchProducts() {
-//             return [];
-//           },
-//         },
-//       }));
+      if (pageSize === 8 && totalProductsSize === 64) {
+        return 8;
+      }
 
-//       const shopStore = new ProductStore();
-
-//       shopStore.fetchProducts();
-
-//       expect(shopStore.products).toStrictEqual([]);
-//     });
-//   });
+      return 0;
+    },
+  },
+}));
 
 context('상품 목록 조회', () => {
-  it('상품이 8개 이하로 존재하는 경우', async () => {
-    // jest.mock('../services/ApiService', () => ({
-    //   apiService: {
-    //     async fetchProducts() {
-    //       return [
-    //         { maker: '제조사 1', name: '상품 옵션명 1', price: 100 },
-    //         { maker: '제조사 2', name: '상품 옵션명 2', price: 200 },
-    //         { maker: '제조사 3', name: '상품 옵션명 3', price: 300 },
-    //       ];
-    //     },
-    //   },
-    // }));
+  it('총 상품 개수 3개, 한 페이지에 8개의 상품 출력, 1번째 페이지 확인', async () => {
+    const productStore = new ProductStore();
 
-    // const shopStore = new ProductStore();
+    await productStore.fetchProducts(1);
 
-    // await shopStore.fetchProducts();
+    expect(productStore.products.length).toBe(3);
+    expect(productStore.products[0].name).toBe('객체지향의 사실과 오해');
+    expect(productStore.products[1].name).toBe('The Pragmatic Programmer');
+    expect(productStore.products[2].name).toBe('Test-Driven Development');
+    expect(productStore.pagesCount).toBe(1);
+  });
 
-    // expect(mockFetehProducts).toBeCalled();
+  it('총 상품 개수 64개, 한 페이지에 8개의 상품 출력, 8번째 페이지 확인', async () => {
+    const productStore = new ProductStore();
 
-    // expect(fetchedProducts[0].maker).toBe('제조사 1');
-    // expect(fetchedProducts[0].name).toBe('상품 옵션명 1');
-    // expect(fetchedProducts[0].price).toBe(100);
+    await productStore.fetchProducts(8);
+
+    expect(productStore.products.length).toBe(8);
+    expect(productStore.products[0].maker).toBe('제조사명 57');
+    expect(productStore.products[1].maker).toBe('제조사명 58');
+    expect(productStore.products[2].maker).toBe('제조사명 59');
+    expect(productStore.products[3].maker).toBe('제조사명 60');
+    expect(productStore.products[4].maker).toBe('제조사명 61');
+    expect(productStore.products[5].maker).toBe('제조사명 62');
+    expect(productStore.products[6].maker).toBe('제조사명 63');
+    expect(productStore.products[7].maker).toBe('제조사명 64');
+    expect(productStore.pagesCount).toBe(8);
   });
 });
 
-// context('상품 목록 조회', () => {
-//   it('상품이 9개 이상 존재하는 경우', () => {
-//     const shopStore = new ProductStore();
+context('상품 상세 목록 조회', () => {
+  it('특정 id에 해당하는 상품을 불러와 product에 저장', async () => {
+    const productStore = new ProductStore();
 
-//     shopStore.fetchProducts();
+    await productStore.fetchProduct(1);
 
-//     expect(shopStore.products[0].maker).toBe('제조사 1');
-//     expect(shopStore.products[0].name).toBe('상품 옵션명 1');
-//     expect(shopStore.products[0].price).toBe(100);
-//   });
-// });
-// });
+    expect(productStore.product.id).toBe(1);
+    expect(productStore.product.maker).toBe('TREK');
+    expect(productStore.product.name).toBe('DOMANE AL 3');
+    expect(productStore.product.price).toBe(1490000);
+    expect(productStore.product.description).toBe('최고의 인듀어런스 자전거');
+  });
+
+  it('상품의 구매 희망 개수 및 가격 조정', async () => {
+    const productStore = new ProductStore();
+
+    await productStore.fetchProduct(1);
+
+    expect(productStore.selectedCount).toBe(1);
+    expect(productStore.totalCost).toBe(1490000);
+
+    productStore.addCountAndTotalCost();
+    expect(productStore.selectedCount).toBe(2);
+    expect(productStore.totalCost).toBe(2980000);
+
+    productStore.addCountAndTotalCost();
+    productStore.addCountAndTotalCost();
+    productStore.addCountAndTotalCost();
+    expect(productStore.selectedCount).toBe(5);
+    expect(productStore.totalCost).toBe(7450000);
+
+    productStore.reduceCountAndTotalCost();
+    productStore.reduceCountAndTotalCost();
+    productStore.reduceCountAndTotalCost();
+    productStore.reduceCountAndTotalCost();
+    expect(productStore.selectedCount).toBe(1);
+    expect(productStore.totalCost).toBe(1490000);
+
+    productStore.addCountAndTotalCost();
+    productStore.addCountAndTotalCost();
+    productStore.resetCountAndCost();
+    expect(productStore.selectedCount).toBe(1);
+    expect(productStore.totalCost).toBe(1490000);
+  });
+});

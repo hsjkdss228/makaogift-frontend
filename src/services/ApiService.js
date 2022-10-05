@@ -10,15 +10,20 @@ export default class ApiService {
   async fetchProduct(id) {
     const url = `${apiBaseUrl}/products/${id}`;
     const { data } = await axios.get(url);
-    const products = data;
-    return products;
+    const product = data;
+    return product;
   }
 
-  async fetchProducts() {
+  async fetchProducts(page) {
     const url = `${apiBaseUrl}/products`;
-    const { data } = await axios.get(url);
-    const { products } = data;
-    return products;
+    const { data } = await axios.get(url, {
+      params: { page },
+    });
+    return {
+      products: data.products.content,
+      pageSize: data.products.pageable.pageSize,
+      totalProductsSize: data.totalProductsSize,
+    };
   }
 }
 

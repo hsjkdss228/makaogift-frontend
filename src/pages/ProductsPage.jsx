@@ -8,7 +8,7 @@ export default function ProductsPage() {
   const productStore = useProductStore();
 
   useEffect(() => {
-    productStore.fetchProducts();
+    productStore.fetchProducts(1);
     productStore.resetCountAndCost();
   }, []);
 

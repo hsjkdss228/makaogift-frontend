@@ -20,7 +20,7 @@ Scenario('상품이 존재하지 않는 경우', ({ I }) => {
   I.see('상품이 존재하지 않습니다.');
 });
 
-Scenario('상품이 8개 이하 존재하는 경우', ({ I }) => {
+Scenario('상품이 8개 이하로 존재하는 경우', ({ I }) => {
   // Given
   I.setupProducts({ count: 3 });
 
@@ -43,4 +43,29 @@ Scenario('상품이 8개 이하 존재하는 경우', ({ I }) => {
   I.see('상품 옵션명 3');
   I.see('100원');
   I.see('300원');
+});
+
+Scenario('상품이 8개 이상으로 존재하는 경우', ({ I }) => {
+  // Given
+  I.setupProducts({ count: 70 });
+
+  I.amOnPage('/');
+
+  // When 1
+  I.amOnPage('/products');
+
+  // Then 1
+  I.see('상품 옵션명 1');
+  I.see('상품 옵션명 8');
+  I.see('1');
+  I.see('9');
+
+  // When 2
+  I.click('9');
+
+  // Then 2
+  I.see('상품 옵션명 65');
+  I.see('상품 옵션명 70');
+  I.see('1');
+  I.see('9');
 });

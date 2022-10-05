@@ -1,18 +1,24 @@
 import { apiService } from '../services/ApiService';
+import { pagingService } from '../services/PagingService';
 
 export default class ProductStore {
   constructor() {
     this.products = [];
-    this.product = {};
+    this.pagesCount = 0;
 
+    this.product = {};
     this.selectedCount = 1;
     this.totalCost = 0;
 
     this.listeners = new Set();
   }
 
-  async fetchProducts() {
-    this.products = await apiService.fetchProducts();
+  async fetchProducts(page) {
+    const { products, pageSize, totalProductsSize } = await apiService.fetchProducts(page);
+    this.products = products;
+    this.pagesCount = pagingService.calculatePageCount({
+      pageSize, totalProductsSize,
+    });
     this.publish();
   }
 
