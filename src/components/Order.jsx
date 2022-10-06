@@ -1,14 +1,27 @@
+import { useNavigate } from 'react-router-dom';
 import useOrderStore from '../hooks/useOrderStore';
 
 import numberFormat from '../utils/numberFormat';
 
 export default function Order() {
+  const navigate = useNavigate();
+
   const orderStore = useOrderStore();
 
   const {
-    product, selectedCount, totalCost,
+    product, purchaseCount, purchaseCost,
     recipient, address, messageToSend,
   } = orderStore;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const orderId = await orderStore.order();
+
+    if (orderId) {
+      navigate('/orders');
+    }
+  };
 
   return (
     <article>
@@ -18,16 +31,16 @@ export default function Order() {
         <p>
           구매수량:
           {' '}
-          {selectedCount}
+          {purchaseCount}
         </p>
         <p>
           총 상품금액:
           {' '}
-          {numberFormat(totalCost)}
+          {numberFormat(purchaseCost)}
           원
         </p>
       </section>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="input-recipient">
           받는 분 성함
           {/* TODO: *표시는 CSS 속성을 수정해서 윗첨자 처리해야 함 */}

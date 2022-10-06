@@ -14,7 +14,11 @@ export default function OrderPage() {
   const orderStore = useOrderStore();
 
   useEffect(() => {
-    orderStore.initialize({ product, selectedCount, totalCost });
+    orderStore.initialize({
+      product,
+      purchaseCount: selectedCount,
+      purchaseCost: totalCost,
+    });
   }, []);
 
   return (

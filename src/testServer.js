@@ -10,7 +10,7 @@ const { apiBaseUrl } = config;
 
 const server = setupServer(
   rest.get(`${apiBaseUrl}/products`, async (request, response, context) => {
-    const page = request.url.searchParams.get('page');
+    const page = await request.url.searchParams.get('page');
 
     if (page === '1') {
       return response(context.json({
@@ -71,7 +71,7 @@ const server = setupServer(
   }),
 
   rest.get(`${apiBaseUrl}/products/:productId`, async (request, response, context) => {
-    const { productId } = request.params;
+    const { productId } = await request.params;
 
     if (productId === '1') {
       return response(context.json({
@@ -84,6 +84,64 @@ const server = setupServer(
     }
 
     return response(context.status(400));
+  }),
+
+  rest.post(`${apiBaseUrl}/order`, async (request, response, context) => {
+    const { recipient, address } = await request.json();
+
+    if (!recipient && !address) {
+      return response(
+        context.status(400),
+        context.json({
+          errorCodesAndMessages: {
+            1001: '성함을 입력해주세요',
+            1002: '주소를 입력해주세요',
+          },
+        }),
+      );
+    }
+
+    if (!recipient) {
+      return response(
+        context.status(400),
+        context.json({
+          errorCodesAndMessages: {
+            1001: '성함을 입력해주세요',
+          },
+        }),
+      );
+    }
+
+    if (!address) {
+      return response(
+        context.status(400),
+        context.json({
+          errorCodesAndMessages: {
+            1002: '주소를 입력해주세요',
+          },
+        }),
+      );
+    }
+
+    if (recipient === '치코'
+    || recipient === '치코리타치코리타치코리타'
+    || recipient === '치코12리타') {
+      return response(
+        context.status(400),
+        context.json({
+          errorCodesAndMessages: {
+            1003: '3~7자까지 한글만 사용해주세요',
+          },
+        }),
+      );
+    }
+
+    return response(
+      context.status(200),
+      context.json({
+        orderId: 1,
+      }),
+    );
   }),
 );
 

@@ -25,6 +25,26 @@ export default class ApiService {
       totalProductsSize: data.totalProductsSize,
     };
   }
+
+  async order({
+    productId,
+    purchaseCount,
+    purchaseCost,
+    recipient,
+    address,
+    messageToSend,
+  }) {
+    const url = `${apiBaseUrl}/order`;
+    const { data } = await axios.post(url, {
+      productId,
+      purchaseCount,
+      purchaseCost,
+      recipient,
+      address,
+      messageToSend,
+    });
+    return data.orderId;
+  }
 }
 
 export const apiService = new ApiService();

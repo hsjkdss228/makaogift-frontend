@@ -1,6 +1,6 @@
-import ProductStore from './ProductStore';
+import context from 'jest-plugin-context';
 
-const context = describe;
+import ProductStore from './ProductStore';
 
 jest.mock('../services/PagingService', () => ({
   pagingService: {
