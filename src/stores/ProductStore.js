@@ -1,16 +1,19 @@
+import Store from './Store';
+
 import { apiService } from '../services/ApiService';
 import { pagingService } from '../services/PagingService';
 
-export default class ProductStore {
+export default class ProductStore extends Store {
   constructor() {
+    super();
+
     this.products = [];
     this.pagesCount = 0;
 
     this.product = {};
     this.selectedCount = 1;
     this.totalCost = 0;
-
-    this.listeners = new Set();
+    this.canBuy = true;
   }
 
   async fetchProducts(page) {
@@ -24,19 +27,20 @@ export default class ProductStore {
 
   async fetchProduct(id) {
     this.product = await apiService.fetchProduct(id);
-    this.totalCount = 1;
-    this.totalCost = this.product.price;
+    this.resetCountAndCost();
     this.publish();
   }
 
   resetCountAndCost() {
     this.selectedCount = 1;
     this.totalCost = this.product.price;
+    this.canBuy = true;
   }
 
   addCountAndTotalCost() {
     this.selectedCount += 1;
     this.totalCost += this.product.price;
+    this.canBuy = true;
     this.publish();
   }
 
@@ -46,19 +50,13 @@ export default class ProductStore {
     }
     this.selectedCount -= 1;
     this.totalCost -= this.product.price;
+    this.canBuy = true;
     this.publish();
   }
 
-  subscribe(listener) {
-    this.listeners.add(listener);
-  }
-
-  unsubscribe(listener) {
-    this.listeners.delete(listener);
-  }
-
-  publish() {
-    this.listeners.forEach((listener) => listener());
+  discontinuePurchase() {
+    this.canBuy = false;
+    this.publish();
   }
 }
 

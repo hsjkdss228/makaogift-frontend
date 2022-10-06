@@ -1,10 +1,20 @@
+import { useNavigate } from 'react-router-dom';
+
 import useProductStore from '../hooks/useProductStore';
+import useUserStore from '../hooks/useUserStore';
+
 import numberFormat from '../utils/numberFormat';
 
 export default function Product() {
-  const productStore = useProductStore();
+  const navigate = useNavigate();
 
-  const { product, selectedCount, totalCost } = productStore;
+  const productStore = useProductStore();
+  const {
+    product, selectedCount, totalCost, canBuy,
+  } = productStore;
+
+  const userStore = useUserStore();
+  const { amount } = userStore;
 
   const handleAddClick = () => {
     productStore.addCountAndTotalCost();
@@ -15,7 +25,18 @@ export default function Product() {
   };
 
   const handleBuyClick = () => {
+    if (amount < totalCost) {
+      productStore.discontinuePurchase();
+      return;
+    }
 
+    navigate('/order', {
+      state: {
+        product,
+        selectedCount,
+        totalCost,
+      },
+    });
   };
 
   return (
@@ -58,10 +79,14 @@ export default function Product() {
       </p>
       <button
         type="button"
+        name="present-button"
         onClick={handleBuyClick}
       >
         선물하기
       </button>
+      {!canBuy ? (
+        <p>잔액이 부족하여 선물하기가 불가합니다.</p>
+      ) : null}
     </article>
   );
 }

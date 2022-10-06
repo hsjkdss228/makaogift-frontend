@@ -1,9 +1,6 @@
-// import { useEffect } from 'react';
-
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
-// import useProductStore from '../hooks/useProductStore';
+import { useLocation } from 'react-router-dom';
 
 import Product from '../components/Product';
 import useProductStore from '../hooks/useProductStore';
