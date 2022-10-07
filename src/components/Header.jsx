@@ -11,7 +11,7 @@ export default function Header() {
         <Link to="/products">
           스토어
         </Link>
-        <Link to="/">
+        <Link to="/orders">
           주문조회
         </Link>
       </nav>

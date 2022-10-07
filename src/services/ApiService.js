@@ -45,6 +45,19 @@ export default class ApiService {
     });
     return data.orderId;
   }
+
+  async fetchTransactions(page) {
+    const url = `${apiBaseUrl}/orders`;
+    const { data } = await axios.get(url, {
+      params: { page },
+    });
+
+    return {
+      transactions: data.transactions,
+      pageSize: data.pageSize,
+      totalTransactionsSize: data.totalTransactionsSize,
+    };
+  }
 }
 
 export const apiService = new ApiService();

@@ -17,10 +17,13 @@ export default class ProductStore extends Store {
   }
 
   async fetchProducts(page) {
-    const { products, pageSize, totalProductsSize } = await apiService.fetchProducts(page);
+    const {
+      products, pageSize, totalProductsSize,
+    } = await apiService.fetchProducts(page);
+
     this.products = products;
     this.pagesCount = pagingService.calculatePageCount({
-      pageSize, totalProductsSize,
+      pageSize, totalPageSize: totalProductsSize,
     });
     this.publish();
   }
