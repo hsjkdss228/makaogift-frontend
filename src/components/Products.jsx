@@ -1,25 +1,23 @@
-import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import HeroSection from './HeroSection';
 
-import useProductStore from '../hooks/useProductStore';
+const List = styled.ul`
+  // TODO: list-style은 글로벌 속성으로 옮겨야 함
+  // 나중에 CSS 강의 다시 보면서 테마, 글로벌 속성 등 적용시킬 것
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+`;
 
-export default function Products() {
-  const navigate = useNavigate();
-
-  const productStore = useProductStore();
-
-  const { products, pagesCount } = productStore;
-
+export default function Products({
+  products, pagesCount, onClickProduct, onClickPage,
+}) {
   const handleProductClick = (productId) => {
-    navigate(`/products/${productId}`, {
-      state: {
-        productId,
-      },
-    });
+    onClickProduct(productId);
   };
 
   const handlePageClick = (page) => {
-    productStore.fetchProducts(page);
-    productStore.resetCountAndCost();
+    onClickPage(page);
   };
 
   const renderPageButtons = () => {
@@ -39,19 +37,14 @@ export default function Products() {
 
   return (
     <article>
-      <section>
-        <p>평범한 선물은 주기도 민망하다구요?</p>
-        <p>작정하고 준비한</p>
-        <p>마카오톡 선물하기 아이템</p>
-        <p>마카오톡 선물하기에서만 볼 수 있는 특별템 기획전</p>
-      </section>
+      <HeroSection />
       <p>인기선물을 한 자리에 모았어요</p>
       {!products.length ? (
         <p>상품이 존재하지 않습니다.</p>
       ) : (
         <>
           <nav>
-            <ul>
+            <List>
               {products.map((product) => (
                 <li key={product.id}>
                   <button
@@ -67,7 +60,7 @@ export default function Products() {
                   </button>
                 </li>
               ))}
-            </ul>
+            </List>
           </nav>
           <nav>
             <ul>

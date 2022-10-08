@@ -4,12 +4,12 @@ import ProductStore from './ProductStore';
 
 jest.mock('../services/PagingService', () => ({
   pagingService: {
-    calculatePageCount: ({ pageSize, totalProductsSize }) => {
-      if (pageSize === 1 && totalProductsSize === 3) {
+    calculatePageCount: ({ pageSize, totalPageSize }) => {
+      if (pageSize === 1 && totalPageSize === 3) {
         return 1;
       }
 
-      if (pageSize === 8 && totalProductsSize === 64) {
+      if (pageSize === 8 && totalPageSize === 64) {
         return 8;
       }
 

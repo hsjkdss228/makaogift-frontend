@@ -20,6 +20,9 @@ export default class OrderStore extends Store {
     this.product = product;
     this.purchaseCount = purchaseCount;
     this.purchaseCost = purchaseCost;
+    this.recipient = '';
+    this.address = '';
+    this.messageToSend = '';
     this.publish();
   }
 

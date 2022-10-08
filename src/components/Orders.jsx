@@ -1,20 +1,29 @@
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 import useTransactionStore from '../hooks/useTransactionStore';
 
+const List = styled.ul`
+  // TODO: list-style은 글로벌 속성으로 옮겨야 함
+  // 나중에 CSS 강의 다시 보면서 테마, 글로벌 속성 등 적용시킬 것
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+`;
+
 export default function Orders() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const transactionStore = useTransactionStore();
 
   const { transactions, pagesCount } = transactionStore;
 
   const handleProductClick = (transactionId) => {
-    // navigate(`/orders/${transactionId}`, {
-    //   state: {
-    //     orderId: transcationId,
-    //   },
-    // });
+    navigate(`/orders/${transactionId}`, {
+      state: {
+        orderId: transactionId,
+      },
+    });
   };
 
   const handlePageClick = (page) => {
@@ -44,7 +53,7 @@ export default function Orders() {
         <>
           <p>내가 주문한 내역입니다</p>
           <nav>
-            <ul>
+            <List>
               {transactions.map((transaction) => (
                 <li key={transaction.id}>
                   <button
@@ -61,7 +70,7 @@ export default function Orders() {
                   </button>
                 </li>
               ))}
-            </ul>
+            </List>
           </nav>
           <nav>
             <ul>

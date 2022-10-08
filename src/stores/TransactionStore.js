@@ -9,6 +9,8 @@ export default class TransactionStore extends Store {
 
     this.transactions = [];
     this.pagesCount = 0;
+
+    this.transaction = {};
   }
 
   async fetchTransactions(page) {
@@ -20,6 +22,11 @@ export default class TransactionStore extends Store {
     this.pagesCount = pagingService.calculatePageCount({
       pageSize, totalPageSize: totalTransactionsSize,
     });
+    this.publish();
+  }
+
+  async fetchTransaction(id) {
+    this.transaction = await apiService.fetchTransaction(id);
     this.publish();
   }
 }

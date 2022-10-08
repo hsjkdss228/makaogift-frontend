@@ -16,6 +16,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     productStore.fetchProduct(productId);
+    productStore.resetCountAndCost();
   }, []);
 
   return (
