@@ -20,6 +20,8 @@ export default function OrderDetailPage() {
   }, []);
 
   return (
-    <OrderDetail />
+    <OrderDetail
+      transaction={transactionStore.transaction}
+    />
   );
 }

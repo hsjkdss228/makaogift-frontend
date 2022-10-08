@@ -46,9 +46,12 @@ export default class ApiService {
     return data.orderId;
   }
 
-  // async fetchTransaction(id) {
-
-  // }
+  async fetchTransaction(id) {
+    const url = `${apiBaseUrl}/orders/${id}`;
+    const { data } = await axios.get(url);
+    const transaction = data;
+    return transaction;
+  }
 
   async fetchTransactions(page) {
     const url = `${apiBaseUrl}/orders`;
