@@ -23,6 +23,7 @@ export default class UserStore extends Store {
 
       return accessToken;
     } catch (error) {
+      console.log(error);
       return '';
     }
   }

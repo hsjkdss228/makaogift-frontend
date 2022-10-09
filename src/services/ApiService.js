@@ -7,6 +7,15 @@ import config from '../config';
 const { apiBaseUrl } = config;
 
 export default class ApiService {
+  constructor() {
+    this.accessToken = '';
+  }
+
+  setAccessToken(accessToken) {
+    console.log(`Set accessToken to ${accessToken}`);
+    this.accessToken = accessToken;
+  }
+
   async postSession({ identification, password }) {
     const url = `${apiBaseUrl}/session`;
     const { data } = await axios.post(url, {
@@ -54,13 +63,21 @@ export default class ApiService {
       recipient,
       address,
       messageToSend,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
     });
     return data.orderId;
   }
 
   async fetchTransaction(id) {
     const url = `${apiBaseUrl}/orders/${id}`;
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
     const transaction = data;
     return transaction;
   }
@@ -68,6 +85,9 @@ export default class ApiService {
   async fetchTransactions(page) {
     const url = `${apiBaseUrl}/orders`;
     const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
       params: { page },
     });
 

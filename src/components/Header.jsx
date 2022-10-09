@@ -45,6 +45,10 @@ export default function Header() {
         {accessToken ? (
           <>
             <p>
+              {
+                /* TODO: 나도 잔액조회 새로고침 하면 0원 나옴
+                   잔액 정보를 백엔드에서 받아와 갱신하도록 구조 수정할 것 */
+              }
               내 잔액:
               {' '}
               {numberFormat(userStore.amount)}
@@ -72,7 +76,6 @@ export default function Header() {
               로그인
             </button>
           </>
-
         )}
       </nav>
     </div>

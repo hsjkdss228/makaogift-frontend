@@ -19,7 +19,9 @@ export default function LoginForm() {
 
   const userStore = useUserStore();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, event) => {
+    event.preventDefault();
+
     const { account, password } = data;
     const accessToken = await userStore.login({ identification: account, password });
     if (accessToken) {
