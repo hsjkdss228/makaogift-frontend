@@ -7,6 +7,18 @@ import config from '../config';
 const { apiBaseUrl } = config;
 
 export default class ApiService {
+  async postSession({ identification, password }) {
+    const url = `${apiBaseUrl}/session`;
+    const { data } = await axios.post(url, {
+      identification, password,
+    });
+    return {
+      accessToken: data.accessToken,
+      userName: data.name,
+      userAmount: data.amount,
+    };
+  }
+
   async fetchProduct(id) {
     const url = `${apiBaseUrl}/products/${id}`;
     const { data } = await axios.get(url);
