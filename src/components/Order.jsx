@@ -1,26 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable no-nested-ternary */
+
 import useOrderStore from '../hooks/useOrderStore';
 
 import numberFormat from '../utils/numberFormat';
 
-export default function Order() {
-  const navigate = useNavigate();
+import OrderInputArea from './OrderInputArea';
 
+export default function Order({
+  product, purchaseCount, purchaseCost, receiver, address, messageToSend,
+  errors, onSubmit,
+}) {
   const orderStore = useOrderStore();
 
-  const {
-    product, purchaseCount, purchaseCost,
-    recipient, address, messageToSend,
-  } = orderStore;
-
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const orderId = await orderStore.order();
-
-    if (orderId) {
-      navigate('/orders');
-    }
+    onSubmit(event);
   };
 
   return (
@@ -41,54 +34,49 @@ export default function Order() {
         </p>
       </section>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="input-recipient">
-          받는 분 성함
-          {/* TODO: *표시는 CSS 속성을 수정해서 윗첨자 처리해야 함 */}
-          <span>*</span>
-        </label>
-        <input
-          id="input-recipient"
-          name="recipient"
+        <OrderInputArea
+          id="input-receiver"
+          label="받는 분 성함"
+          inputRequired
           type="text"
-          value={recipient}
+          value={receiver}
           onChange={(event) => (
-            orderStore.changeRecipientInput(event.target.value)
+            orderStore.changeReceiverInput(event.target.value)
           )}
+          informationMessage={
+            Object.prototype.hasOwnProperty.call(errors, '3000')
+              ? errors['3000']
+              : Object.prototype.hasOwnProperty.call(errors, '3002')
+                ? errors['3002']
+                : '3-7자까지 한글만 사용 가능'
+          }
         />
-        <p>
-          3~7자까지 한글만 사용 가능
-        </p>
-        <label htmlFor="input-address">
-          받는 분 주소
-          <span>*</span>
-        </label>
-        <input
+        <OrderInputArea
           id="input-address"
-          name="address"
+          label="받는 분 주소"
+          inputRequired
           type="text"
           value={address}
           onChange={(event) => (
             orderStore.changeAddressInput(event.target.value)
           )}
+          informationMessage={
+            Object.prototype.hasOwnProperty.call(errors, '3001')
+              ? errors['3001']
+              : '주소지를 입력해주세요'
+          }
         />
-        <p>
-          주소지를 입력해주세요
-        </p>
-        <label htmlFor="input-message-to-send">
-          받는 분께 보내는 메세지
-        </label>
-        <input
+        <OrderInputArea
           id="input-message-to-send"
-          name="messageToSend"
+          label="받는 분께 보내는 메세지"
+          inputRequired={false}
           type="text"
           value={messageToSend}
           onChange={(event) => (
             orderStore.changeMessageInput(event.target.value)
           )}
+          informationMessage="100글자 이내로 입력해주세요"
         />
-        <p>
-          100글자 이내로 입력해주세요
-        </p>
         <button
           type="submit"
         >

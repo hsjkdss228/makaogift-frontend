@@ -14,8 +14,7 @@ export default function Header() {
   const userStore = useUserStore();
 
   const handleClickRegister = () => {
-    // TODO: 회원가입으로 보내야 함
-    navigate('/');
+    navigate('/signup');
   };
 
   const handleClickLogin = () => {

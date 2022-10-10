@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+
 import { apiService } from '../services/ApiService';
 import Store from './Store';
 
@@ -7,6 +9,10 @@ export default class UserStore extends Store {
 
     this.name = '';
     this.amount = 0;
+
+    this.loginError = '';
+
+    this.signUpErrors = {};
   }
 
   async login({ identification, password }) {
@@ -23,7 +29,24 @@ export default class UserStore extends Store {
 
       return accessToken;
     } catch (error) {
-      console.log(error);
+      this.loginError = error.response.data.errorMessage;
+      this.publish();
+      return '';
+    }
+  }
+
+  async register({
+    name, identification, password, confirmPassword,
+  }) {
+    try {
+      const userName = await apiService.register({
+        name, identification, password, confirmPassword,
+      });
+
+      return userName;
+    } catch (error) {
+      this.signUpErrors = error.response.data.codesAndMessages;
+      this.publish();
       return '';
     }
   }

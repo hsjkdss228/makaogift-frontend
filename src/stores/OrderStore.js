@@ -9,7 +9,7 @@ export default class OrderStore extends Store {
     this.product = {};
     this.purchaseCount = 1;
     this.purchaseCost = 0;
-    this.recipient = '';
+    this.receiver = '';
     this.address = '';
     this.messageToSend = '';
 
@@ -20,9 +20,10 @@ export default class OrderStore extends Store {
     this.product = product;
     this.purchaseCount = purchaseCount;
     this.purchaseCost = purchaseCost;
-    this.recipient = '';
+    this.receiver = '';
     this.address = '';
     this.messageToSend = '';
+    this.errorCodesAndMessages = {};
     this.publish();
   }
 
@@ -32,7 +33,7 @@ export default class OrderStore extends Store {
         productId: this.product.id,
         purchaseCount: this.purchaseCount,
         purchaseCost: this.purchaseCost,
-        recipient: this.recipient,
+        receiver: this.receiver,
         address: this.address,
         messageToSend: this.messageToSend,
       });
@@ -45,8 +46,8 @@ export default class OrderStore extends Store {
     }
   }
 
-  changeRecipientInput(recipient) {
-    this.recipient = recipient;
+  changeReceiverInput(receiver) {
+    this.receiver = receiver;
     this.publish();
   }
 

@@ -9,12 +9,15 @@ import { apiService } from './services/ApiService';
 import Header from './components/Header';
 
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import WelcomePage from './pages/WelcomePage';
 import ProductsPage from './pages/ProductsPage';
 import ProductPage from './pages/ProductPage';
 import OrderPage from './pages/OrderPage';
 import OrdersPage from './pages/OrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
-import LoginPage from './pages/LoginPage';
+
 import useUserStore from './hooks/useUserStore';
 
 export default function App() {
@@ -24,6 +27,8 @@ export default function App() {
 
   useEffect(() => {
     apiService.setAccessToken(accessToken);
+
+    // TODO: fetchUserAmount 추가???
     userStore.publish();
   }, [accessToken]);
 
@@ -33,6 +38,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:productId" element={<ProductPage />} />
         <Route path="/order" element={<OrderPage />} />

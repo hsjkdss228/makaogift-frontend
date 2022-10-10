@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useOrderStore from '../hooks/useOrderStore';
 
 import Order from '../components/Order';
 
 export default function OrderPage() {
+  const navigate = useNavigate();
+
   const location = useLocation();
 
   const { product, selectedCount, totalCost } = location.state;
@@ -21,7 +23,30 @@ export default function OrderPage() {
     });
   }, []);
 
+  const {
+    receiver, address, messageToSend, errorCodesAndMessages,
+  } = orderStore;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const orderId = await orderStore.order();
+
+    if (orderId) {
+      navigate('/orders');
+    }
+  };
+
   return (
-    <Order />
+    <Order
+      product={product}
+      purchaseCount={selectedCount}
+      purchaseCost={totalCost}
+      receiver={receiver}
+      address={address}
+      messageToSend={messageToSend}
+      errors={errorCodesAndMessages}
+      onSubmit={handleSubmit}
+    />
   );
 }

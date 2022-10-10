@@ -28,6 +28,16 @@ export default class ApiService {
     };
   }
 
+  async register({
+    name, identification, password, confirmPassword,
+  }) {
+    const url = `${apiBaseUrl}/user`;
+    const { data } = await axios.post(url, {
+      name, identification, password, confirmPassword,
+    });
+    return data.name;
+  }
+
   async fetchProduct(id) {
     const url = `${apiBaseUrl}/products/${id}`;
     const { data } = await axios.get(url);
@@ -51,7 +61,7 @@ export default class ApiService {
     productId,
     purchaseCount,
     purchaseCost,
-    recipient,
+    receiver,
     address,
     messageToSend,
   }) {
@@ -60,7 +70,7 @@ export default class ApiService {
       productId,
       purchaseCount,
       purchaseCost,
-      recipient,
+      receiver,
       address,
       messageToSend,
     }, {
