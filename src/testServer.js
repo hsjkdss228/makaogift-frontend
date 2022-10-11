@@ -87,9 +87,9 @@ const server = setupServer(
   }),
 
   rest.post(`${apiBaseUrl}/order`, async (request, response, context) => {
-    const { recipient, address } = await request.json();
+    const { receiver, address } = await request.json();
 
-    if (!recipient && !address) {
+    if (!receiver && !address) {
       return response(
         context.status(400),
         context.json({
@@ -101,7 +101,7 @@ const server = setupServer(
       );
     }
 
-    if (!recipient) {
+    if (!receiver) {
       return response(
         context.status(400),
         context.json({
@@ -123,9 +123,9 @@ const server = setupServer(
       );
     }
 
-    if (recipient === '치코'
-    || recipient === '치코리타치코리타치코리타'
-    || recipient === '치코12리타') {
+    if (receiver === '치코'
+    || receiver === '치코리타치코리타치코리타'
+    || receiver === '치코12리타') {
       return response(
         context.status(400),
         context.json({

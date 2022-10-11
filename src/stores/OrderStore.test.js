@@ -29,11 +29,11 @@ describe('OrderStore', () => {
     it('입력 필드 상태를 정상적으로 수정하고 publish를 수행', () => {
       const spyPublish = jest.spyOn(orderStore, 'publish');
 
-      orderStore.changeRecipientInput('치코리타');
+      orderStore.changeReceiverInput('치코리타');
       orderStore.changeAddressInput('연두마을 공박사 연구소');
       orderStore.changeMessageInput('너, 우리의 동료가 되라!');
 
-      expect(orderStore.recipient).toBe('치코리타');
+      expect(orderStore.receiver).toBe('치코리타');
       expect(orderStore.address).toBe('연두마을 공박사 연구소');
       expect(orderStore.messageToSend).toBe('너, 우리의 동료가 되라!');
       expect(spyPublish).toBeCalled();
@@ -63,7 +63,7 @@ describe('OrderStore', () => {
 
     context('받는 분 이름을 입력하지 않고 요청할 경우', () => {
       it('에러 코드와 메세지를 반환', async () => {
-        orderStore.changeRecipientInput('');
+        orderStore.changeReceiverInput('');
 
         const orderId = await orderStore.order();
 
@@ -76,7 +76,7 @@ describe('OrderStore', () => {
 
     context('받는 분 주소를 입력하지 않고 요청할 경우', () => {
       it('에러 코드와 메세지를 반환', async () => {
-        orderStore.changeRecipientInput('치코리타');
+        orderStore.changeReceiverInput('치코리타');
         orderStore.changeAddressInput('');
 
         const orderId = await orderStore.order();
@@ -90,7 +90,7 @@ describe('OrderStore', () => {
 
     context('받는 분 이름, 주소를 둘 다 입력하지 않고 요청할 경우', () => {
       it('에러 코드와 메세지를 반환', async () => {
-        orderStore.changeRecipientInput('');
+        orderStore.changeReceiverInput('');
         orderStore.changeAddressInput('');
 
         const orderId = await orderStore.order();
@@ -106,7 +106,7 @@ describe('OrderStore', () => {
     context('받는 분 이름에 잘못된 입력을 주는 경우', () => {
       context('2자 이하', () => {
         it('올바른 이름을 입력해달라는 에러 코드와 메세지를 반환', async () => {
-          orderStore.changeRecipientInput('치코');
+          orderStore.changeReceiverInput('치코');
           orderStore.changeAddressInput('연두마을 공박사 연구소');
 
           const orderId = await orderStore.order();
@@ -120,7 +120,7 @@ describe('OrderStore', () => {
 
       context('8자 이상', () => {
         it('올바른 이름을 입력해달라는 에러 코드와 메세지를 반환', async () => {
-          orderStore.changeRecipientInput('치코리타치코리타치코리타');
+          orderStore.changeReceiverInput('치코리타치코리타치코리타');
 
           const orderId = await orderStore.order();
 
@@ -133,7 +133,7 @@ describe('OrderStore', () => {
 
       context('허용되지 않는 문자 포함', () => {
         it('올바른 이름을 입력해달라는 에러 코드와 메세지를 반환', async () => {
-          orderStore.changeRecipientInput('치코12리타');
+          orderStore.changeReceiverInput('치코12리타');
 
           const orderId = await orderStore.order();
 

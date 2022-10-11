@@ -10,6 +10,9 @@ jest.mock('react-router-dom', () => ({
       </a>
     );
   },
+  useNavigate: () => ({
+    navigate: jest.fn(),
+  }),
 }));
 
 test('Header', () => {

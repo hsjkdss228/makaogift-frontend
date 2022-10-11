@@ -1,53 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts';
-
-import useProductStore from '../hooks/useProductStore';
-import useUserStore from '../hooks/useUserStore';
-
 import numberFormat from '../utils/numberFormat';
 
-export default function Product() {
-  const navigate = useNavigate();
-
-  const [accessToken] = useLocalStorage('accessToken', '');
-
-  const productStore = useProductStore();
-  const {
-    product, selectedCount, totalCost, canBuy,
-  } = productStore;
-
-  const userStore = useUserStore();
-  const { amount } = userStore;
-
+export default function Product({
+  product, selectedCount, totalCost, canBuy,
+  onClickAdd, onClickReduce, onClickBuy,
+}) {
   const handleAddClick = () => {
-    productStore.addCountAndTotalCost();
+    onClickAdd();
   };
 
   const handleReduceClick = () => {
-    productStore.reduceCountAndTotalCost();
+    onClickReduce();
   };
 
   const handleBuyClick = () => {
-    if (!accessToken) {
-      navigate('/login');
-    }
-
-    if (amount < totalCost) {
-      productStore.discontinuePurchase();
-      return;
-    }
-
-    // TODO: 보내는 사람 정보를 같이 보내서
-    //  Transaction을 생성할 때 같이 전달되도록 해야 함!
-    if (accessToken) {
-      navigate('/order', {
-        state: {
-          product,
-          selectedCount,
-          totalCost,
-        },
-      });
-    }
+    onClickBuy();
   };
 
   return (

@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
-
 /* eslint-disable object-curly-newline */
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import context from 'jest-plugin-context';
 
@@ -53,6 +52,26 @@ describe('Products', () => {
 
       screen.getByText(/maker 9/);
       screen.getByText(/maker 13/);
+      screen.getByRole('button', { name: 1 });
+      screen.getByRole('button', { name: 2 });
+    });
+
+    context('상품 클릭 시', () => {
+      it('상품 상세 페이지 이동 이벤트 핸들러 호출', () => {
+        renderProducts({ products, pagesCount });
+
+        fireEvent.click(screen.getByText(/maker 9/));
+        expect(handleClickProduct).toBeCalled();
+      });
+    });
+
+    context('페이지 버튼 클릭 시', () => {
+      it('페이지 전환 이벤트 핸들러 호출', () => {
+        renderProducts({ products, pagesCount });
+
+        fireEvent.click(screen.getByRole('button', { name: 1 }));
+        expect(handleClickProduct).toBeCalled();
+      });
     });
   });
 

@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useLocalStorage } from 'usehooks-ts';
+
+import useProductStore from '../hooks/useProductStore';
+import useUserStore from '../hooks/useUserStore';
 
 import Product from '../components/Product';
-import useProductStore from '../hooks/useProductStore';
 
 export default function ProductPage() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+
   const location = useLocation();
 
   const productId = location.state !== null
@@ -19,7 +25,53 @@ export default function ProductPage() {
     productStore.resetCountAndCost();
   }, []);
 
+  const {
+    product, selectedCount, totalCost, canBuy,
+  } = productStore;
+
+  const userStore = useUserStore();
+  const { amount } = userStore;
+
+  const navigate = useNavigate();
+
+  const handleClickAdd = () => {
+    productStore.addCountAndTotalCost();
+  };
+
+  const handleClickReduce = () => {
+    productStore.reduceCountAndTotalCost();
+  };
+
+  const handleClickBuy = () => {
+    if (!accessToken) {
+      navigate('/login');
+    }
+
+    if (amount < totalCost) {
+      productStore.discontinuePurchase();
+      return;
+    }
+
+    if (accessToken) {
+      navigate('/order', {
+        state: {
+          product,
+          selectedCount,
+          totalCost,
+        },
+      });
+    }
+  };
+
   return (
-    <Product />
+    <Product
+      product={product}
+      selectedCount={selectedCount}
+      totalCost={totalCost}
+      canBuy={canBuy}
+      onClickAdd={handleClickAdd}
+      onClickReduce={handleClickReduce}
+      onClickBuy={handleClickBuy}
+    />
   );
 }
