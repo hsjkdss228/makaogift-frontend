@@ -57,7 +57,9 @@ export default class OrderStore extends Store {
   }
 
   changeMessageInput(message) {
-    this.messageToSend = message;
+    this.messageToSend = message.length > 100
+      ? message.slice(0, 100)
+      : message;
     this.publish();
   }
 }

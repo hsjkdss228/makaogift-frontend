@@ -38,6 +38,16 @@ export default class ApiService {
     return data.name;
   }
 
+  async fetchUserAmount() {
+    const url = `${apiBaseUrl}/user/amount`;
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+    return data.amount;
+  }
+
   async fetchProduct(id) {
     const url = `${apiBaseUrl}/products/${id}`;
     const { data } = await axios.get(url);

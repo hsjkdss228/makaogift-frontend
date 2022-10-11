@@ -26,9 +26,9 @@ describe('OrderStore', () => {
   });
 
   context('입력 필드의 내용을 수정할 경우', () => {
-    it('입력 필드 상태를 정상적으로 수정하고 publish를 수행', () => {
-      const spyPublish = jest.spyOn(orderStore, 'publish');
+    const spyPublish = jest.spyOn(orderStore, 'publish');
 
+    it('입력 필드 상태를 정상적으로 수정하고 publish를 수행', () => {
       orderStore.changeReceiverInput('치코리타');
       orderStore.changeAddressInput('연두마을 공박사 연구소');
       orderStore.changeMessageInput('너, 우리의 동료가 되라!');
@@ -37,6 +37,18 @@ describe('OrderStore', () => {
       expect(orderStore.address).toBe('연두마을 공박사 연구소');
       expect(orderStore.messageToSend).toBe('너, 우리의 동료가 되라!');
       expect(spyPublish).toBeCalled();
+    });
+
+    context('받는 분께 보내는 메세지 입력 필드에 100글자 이상을 입력할 경우', () => {
+      it('입력된 메세지 중 100글자가 넘는 메세지는 삭제하고 publish를 수행', () => {
+        orderStore.changeMessageInput('생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해'
+        + '생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해'
+        + '생일축하해생일축하해생일축하해생일축하해국방의의무축하해');
+
+        expect(orderStore.messageToSend).toBe('생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해'
+        + '생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해생일축하해'
+        + '생일축하해생일축하해생일축하해생일축하해');
+      });
     });
   });
 

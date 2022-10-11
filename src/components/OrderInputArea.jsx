@@ -1,3 +1,9 @@
+import styled from 'styled-components';
+
+const Input = styled.input`
+  width: 30em;  
+`;
+
 export default function OrderInputArea({
   id, label, inputRequired, type, value, onChange, informationMessage,
 }) {
@@ -7,7 +13,7 @@ export default function OrderInputArea({
         {label}
         <span>{inputRequired ? '*' : null}</span>
       </label>
-      <input
+      <Input
         id={id}
         type={type}
         value={value}

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useOrderStore from '../hooks/useOrderStore';
 
 import Order from '../components/Order';
+import useUserStore from '../hooks/useUserStore';
 
 export default function OrderPage() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function OrderPage() {
   const { product, selectedCount, totalCost } = location.state;
 
   const orderStore = useOrderStore();
+  const userStore = useUserStore();
 
   useEffect(() => {
     orderStore.initialize({
@@ -33,6 +35,7 @@ export default function OrderPage() {
     const orderId = await orderStore.order();
 
     if (orderId) {
+      userStore.fetchUserAmount();
       navigate('/orders');
     }
   };

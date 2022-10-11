@@ -25,11 +25,15 @@ export default function App() {
 
   const userStore = useUserStore();
 
+  const fetchUserAmount = async () => {
+    await userStore.fetchUserAmount();
+  };
+
   useEffect(() => {
     apiService.setAccessToken(accessToken);
-
-    // TODO: fetchUserAmount 추가???
-    userStore.publish();
+    if (accessToken) {
+      fetchUserAmount();
+    }
   }, [accessToken]);
 
   return (

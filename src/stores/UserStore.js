@@ -51,10 +51,9 @@ export default class UserStore extends Store {
     }
   }
 
-  // TODO: amount를 감소시키는 것도 서버와 통신해서 사용자의 잔액을 차감!!!
-
-  reduceAmount(paidAmount) {
-    this.amount -= paidAmount;
+  async fetchUserAmount() {
+    const amount = await apiService.fetchUserAmount();
+    this.amount = amount;
     this.publish();
   }
 }
