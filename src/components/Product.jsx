@@ -4,15 +4,15 @@ export default function Product({
   product, selectedCount, totalCost, canBuy,
   onClickAdd, onClickReduce, onClickBuy,
 }) {
-  const handleAddClick = () => {
+  const handleClickAdd = () => {
     onClickAdd();
   };
 
-  const handleReduceClick = () => {
+  const handleClickReduce = () => {
     onClickReduce();
   };
 
-  const handleBuyClick = () => {
+  const handleClickBuy = () => {
     onClickBuy();
   };
 
@@ -30,7 +30,7 @@ export default function Product({
         <dd>
           <button
             type="button"
-            onClick={handleReduceClick}
+            onClick={handleClickReduce}
             disabled={selectedCount < 2}
           >
             -
@@ -38,7 +38,7 @@ export default function Product({
           {selectedCount}
           <button
             type="button"
-            onClick={handleAddClick}
+            onClick={handleClickAdd}
           >
             +
           </button>
@@ -57,7 +57,7 @@ export default function Product({
       <button
         type="button"
         name="present-button"
-        onClick={handleBuyClick}
+        onClick={handleClickBuy}
       >
         선물하기
       </button>
