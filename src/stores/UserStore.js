@@ -51,6 +51,11 @@ export default class UserStore extends Store {
     }
   }
 
+  resetSignUpErrors() {
+    this.signUpErrors = {};
+    this.publish();
+  }
+
   async fetchUserAmount() {
     const amount = await apiService.fetchUserAmount();
     this.amount = amount;

@@ -9,6 +9,7 @@ export default class ProductStore extends Store {
 
     this.products = [];
     this.pagesCount = 0;
+    this.currentPage = 0;
 
     this.product = {};
     this.selectedCount = 1;
@@ -31,6 +32,11 @@ export default class ProductStore extends Store {
   async fetchProduct(id) {
     this.product = await apiService.fetchProduct(id);
     this.resetCountAndCost();
+    this.publish();
+  }
+
+  setCurrentPage(page) {
+    this.currentPage = page;
     this.publish();
   }
 

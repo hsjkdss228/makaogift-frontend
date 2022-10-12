@@ -1,7 +1,20 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 
+import styled from 'styled-components';
 import InputArea from './InputArea';
+
+import FormHeading from './ui/FormHeading';
+import PrimaryButton from './ui/PrimaryButton';
+import UserForm from './ui/UserForm';
+
+const Container = styled.div`
+  height: ${(props) => props.theme.pageSize.height};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function SignUpForm({
   register, handleSubmit, callBackOnSubmit, errors, signUpErrors,
@@ -11,13 +24,14 @@ export default function SignUpForm({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>SIGN UP</h2>
+    <Container>
+      <UserForm onSubmit={handleSubmit(onSubmit)}>
+        <FormHeading>SIGN UP</FormHeading>
         <InputArea
           register={register}
           id="input-name"
           label="이름 :"
+          showLabel
           type="text"
           placeholder={null}
           name="name"
@@ -40,6 +54,7 @@ export default function SignUpForm({
           register={register}
           id="input-account"
           label="아이디 :"
+          showLabel
           type="text"
           placeholder={null}
           name="account"
@@ -66,6 +81,7 @@ export default function SignUpForm({
           register={register}
           id="input-password"
           label="비밀번호 :"
+          showLabel
           type="password"
           placeholder={null}
           name="password"
@@ -90,6 +106,7 @@ export default function SignUpForm({
           register={register}
           id="input-confirm-password"
           label="비밀번호 확인 :"
+          showLabel
           type="password"
           placeholder={null}
           name="confirmPassword"
@@ -106,10 +123,10 @@ export default function SignUpForm({
                   : null
           }
         />
-        <button type="submit">
+        <PrimaryButton type="submit">
           회원가입
-        </button>
-      </form>
-    </div>
+        </PrimaryButton>
+      </UserForm>
+    </Container>
   );
 }

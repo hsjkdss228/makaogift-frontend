@@ -4,6 +4,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
+import theme from '../styles/theme';
 
 import Products from './Products';
 
@@ -13,12 +15,14 @@ describe('Products', () => {
 
   function renderProducts({ products, pagesCount }) {
     render((
-      <Products
-        products={products}
-        pagesCount={pagesCount}
-        onClickPage={handleClickPage}
-        onClickProduct={handleClickProduct}
-      />
+      <ThemeProvider theme={theme}>
+        <Products
+          products={products}
+          pagesCount={pagesCount}
+          onClickPage={handleClickPage}
+          onClickProduct={handleClickProduct}
+        />
+      </ThemeProvider>
     ));
   }
 
@@ -33,7 +37,8 @@ describe('Products', () => {
 
       screen.getByText('메이커');
       screen.getByText('네임');
-      screen.getByText('100원');
+      screen.getByText('100');
+      screen.getByText('원');
     });
   });
 

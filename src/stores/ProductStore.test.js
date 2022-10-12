@@ -24,29 +24,33 @@ describe('상품 목록 조회', () => {
   context('한번에 8개의 상품을 출력하고, 총 상품 개수가 3개인 상태에서 1번째 페이지를 확인하는 경우', () => {
     it('3개의 상품을 출력', async () => {
       await productStore.fetchProducts(1);
+      productStore.setCurrentPage(1);
 
       expect(productStore.products.length).toBe(3);
       expect(productStore.products[0].name).toBe('객체지향의 사실과 오해');
       expect(productStore.products[1].name).toBe('The Pragmatic Programmer');
       expect(productStore.products[2].name).toBe('Test-Driven Development');
       expect(productStore.pagesCount).toBe(1);
+      expect(productStore.currentPage).toBe(1);
     });
   });
 
-  context('한번에 8개의 상품을 출력하고, 총 상품 개수가 64개인 상태에서 8번째 페이지를 확인하는 경우', () => {
+  context('한번에 8개의 상품을 출력하고, 총 상품 개수가 64개인 상태에서 5번째 페이지를 확인하는 경우', () => {
     it('8개의 상품을 출력', async () => {
-      await productStore.fetchProducts(8);
+      await productStore.fetchProducts(5);
+      productStore.setCurrentPage(5);
 
       expect(productStore.products.length).toBe(8);
-      expect(productStore.products[0].maker).toBe('제조사명 57');
-      expect(productStore.products[1].maker).toBe('제조사명 58');
-      expect(productStore.products[2].maker).toBe('제조사명 59');
-      expect(productStore.products[3].maker).toBe('제조사명 60');
-      expect(productStore.products[4].maker).toBe('제조사명 61');
-      expect(productStore.products[5].maker).toBe('제조사명 62');
-      expect(productStore.products[6].maker).toBe('제조사명 63');
-      expect(productStore.products[7].maker).toBe('제조사명 64');
+      expect(productStore.products[0].maker).toBe('제조사명 33');
+      expect(productStore.products[1].maker).toBe('제조사명 34');
+      expect(productStore.products[2].maker).toBe('제조사명 35');
+      expect(productStore.products[3].maker).toBe('제조사명 36');
+      expect(productStore.products[4].maker).toBe('제조사명 37');
+      expect(productStore.products[5].maker).toBe('제조사명 38');
+      expect(productStore.products[6].maker).toBe('제조사명 39');
+      expect(productStore.products[7].maker).toBe('제조사명 40');
       expect(productStore.pagesCount).toBe(8);
+      expect(productStore.currentPage).toBe(5);
     });
   });
 });

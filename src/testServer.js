@@ -46,18 +46,18 @@ const server = setupServer(
       }));
     }
 
-    if (page === '8') {
+    if (page === '5') {
       return response(context.json({
         products: {
           content: [
-            { id: 57, maker: '제조사명 57', name: '.', price: 100, description: '.' },
-            { id: 58, maker: '제조사명 58', name: '.', price: 100, description: '.' },
-            { id: 59, maker: '제조사명 59', name: '.', price: 100, description: '.' },
-            { id: 60, maker: '제조사명 60', name: '.', price: 100, description: '.' },
-            { id: 61, maker: '제조사명 61', name: '.', price: 100, description: '.' },
-            { id: 62, maker: '제조사명 62', name: '.', price: 100, description: '.' },
-            { id: 63, maker: '제조사명 63', name: '.', price: 100, description: '.' },
-            { id: 64, maker: '제조사명 64', name: '.', price: 100, description: '.' },
+            { id: 33, maker: '제조사명 33', name: '.', price: 100, description: '.' },
+            { id: 34, maker: '제조사명 34', name: '.', price: 100, description: '.' },
+            { id: 35, maker: '제조사명 35', name: '.', price: 100, description: '.' },
+            { id: 36, maker: '제조사명 36', name: '.', price: 100, description: '.' },
+            { id: 37, maker: '제조사명 37', name: '.', price: 100, description: '.' },
+            { id: 38, maker: '제조사명 38', name: '.', price: 100, description: '.' },
+            { id: 39, maker: '제조사명 39', name: '.', price: 100, description: '.' },
+            { id: 40, maker: '제조사명 40', name: '.', price: 100, description: '.' },
           ],
           pageable: {
             pageSize: 8,
