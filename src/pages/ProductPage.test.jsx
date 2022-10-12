@@ -4,17 +4,23 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
+
+import theme from '../styles/theme';
 
 import ProductPage from './ProductPage';
 
 const navigate = jest.fn();
+let productId;
 
 jest.mock('react-router-dom', () => ({
   useNavigate: () => (
     navigate
   ),
   useLocation: () => ({
-    state: 1,
+    state: {
+      productId,
+    },
   }),
 }));
 
@@ -47,8 +53,17 @@ jest.mock('../hooks/useUserStore', () => () => ({
 }));
 
 describe('ProductPage', () => {
+  function renderProductPage() {
+    render((
+      <ThemeProvider theme={theme}>
+        <ProductPage />
+      </ThemeProvider>
+    ));
+  }
+
   context('상품 데이터가 주어지는 경우', () => {
     beforeEach(() => {
+      productId = 1;
       product = {
         id: 1,
         maker: '수진아쿠아리움',
@@ -58,6 +73,12 @@ describe('ProductPage', () => {
       };
     });
 
+    it('ProductStore에 상품 상세정보 상태 갱신 요청 함수 호출', () => {
+      renderProductPage();
+
+      expect(fetchProduct).toBeCalledWith(productId);
+    });
+
     context('선택한 상품의 개수가 1개인 경우', () => {
       beforeEach(() => {
         selectedCount = 1;
@@ -65,7 +86,7 @@ describe('ProductPage', () => {
       });
 
       it('상품 내역을 화면에 표출', () => {
-        render(<ProductPage />);
+        renderProductPage();
 
         screen.getByText(/이벤트 30% 할인!!!/);
         expect(screen.getAllByText(/270,000원/).length).toBe(2);
@@ -73,7 +94,7 @@ describe('ProductPage', () => {
 
       context('+ 버튼을 누를 경우', () => {
         it('Store의 상품 개수 증가 함수 호출', () => {
-          render(<ProductPage />);
+          renderProductPage();
 
           fireEvent.click(screen.getByText('+'));
           expect(addCountAndTotalCost).toBeCalled();
@@ -82,7 +103,7 @@ describe('ProductPage', () => {
 
       context('- 버튼을 누를 경우', () => {
         it('Store의 상품 개수 감소 함수를 호출하지 않음', () => {
-          render(<ProductPage />);
+          renderProductPage();
 
           fireEvent.click(screen.getByText('-'));
           expect(reduceCountAndTotalCost).not.toBeCalled();
@@ -96,7 +117,7 @@ describe('ProductPage', () => {
           });
 
           it('로그인 화면으로 이동하는 navigate 함수 호출', () => {
-            render(<ProductPage />);
+            renderProductPage();
 
             fireEvent.click(screen.getByRole('button', { name: '선물하기' }));
             expect(navigate).toBeCalledWith('/login');
@@ -114,7 +135,7 @@ describe('ProductPage', () => {
             });
 
             it('주문하기 페이지로 이동하는 navigate 함수 호출', () => {
-              render(<ProductPage />);
+              renderProductPage();
 
               fireEvent.click(screen.getByRole('button', { name: '선물하기' }));
               expect(navigate).toBeCalledWith('/order', {
@@ -133,7 +154,7 @@ describe('ProductPage', () => {
             });
 
             it('잔액 부족 메세지 출력 상태를 활성화하는 Store 함수 호출', () => {
-              render(<ProductPage />);
+              renderProductPage();
 
               fireEvent.click(screen.getByRole('button', { name: '선물하기' }));
               expect(discontinuePurchase).toBeCalled();
@@ -141,7 +162,7 @@ describe('ProductPage', () => {
           });
 
           it('로그인 화면으로 이동하는 navigate 함수 호출', () => {
-            render(<ProductPage />);
+            renderProductPage();
 
             fireEvent.click(screen.getByRole('button', { name: '선물하기' }));
             expect(navigate).toBeCalledWith('/login');
@@ -157,14 +178,14 @@ describe('ProductPage', () => {
       });
 
       it('상품 가격에 맞는 상품 내역을 화면에 표출', () => {
-        render(<ProductPage />);
+        renderProductPage();
 
         screen.getAllByText(/810,000원/);
       });
 
       context('- 버튼을 누를 경우', () => {
         it('Store의 상품 개수 감소 함수 호출', () => {
-          render(<ProductPage />);
+          renderProductPage();
 
           fireEvent.click(screen.getByText('-'));
           expect(reduceCountAndTotalCost).toBeCalled();

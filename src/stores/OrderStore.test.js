@@ -1,4 +1,5 @@
 import context from 'jest-plugin-context';
+import { apiService } from '../services/ApiService';
 
 import OrderStore from './OrderStore';
 
@@ -54,16 +55,29 @@ describe('OrderStore', () => {
 
   context('백엔드 서버에 주문 내용 POST 요청 시', () => {
     context('정상적으로 입력 후 요청 시', () => {
-      it('주문 내역을 생성해 주문 내역의 id를 반환', async () => {
-        const orderId = await orderStore.order();
+      context('accessToken이 있는 경우', () => {
+        it('주문 내역을 생성해 주문 내역의 id를 반환', async () => {
+          apiService.setAccessToken('TOKEN');
+          const orderId = await orderStore.order();
 
-        expect(orderId).toBeTruthy();
-        expect(orderStore.errorCodesAndMessages).toStrictEqual({});
+          expect(orderId).toBeTruthy();
+          expect(orderStore.errorCodesAndMessages).toStrictEqual({});
+        });
+      });
+
+      context('accessToken이 없는 경우', () => {
+        it('주문 내역을 생성하지 않음', async () => {
+          apiService.setAccessToken('');
+          const orderId = await orderStore.order();
+
+          expect(orderId).toBeFalsy();
+        });
       });
     });
 
     context('받는 분께 보내는 메세지를 입력하지 않고 요청 시에도', () => {
       it('주문 내역을 생성해 주문 내역의 id를 반환', async () => {
+        apiService.setAccessToken('TOKEN');
         orderStore.changeMessageInput('');
 
         const orderId = await orderStore.order();

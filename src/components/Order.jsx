@@ -13,6 +13,7 @@ export default function Order({
   const orderStore = useOrderStore();
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     onSubmit(event);
   };
 

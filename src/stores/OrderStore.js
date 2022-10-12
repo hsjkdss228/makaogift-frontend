@@ -37,6 +37,7 @@ export default class OrderStore extends Store {
         address: this.address,
         messageToSend: this.messageToSend,
       });
+      this.errorCodesAndMessages = {};
       return orderId;
     } catch (error) {
       const { errorCodesAndMessages } = error.response.data;

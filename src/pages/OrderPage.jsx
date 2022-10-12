@@ -29,9 +29,7 @@ export default function OrderPage() {
     receiver, address, messageToSend, errorCodesAndMessages,
   } = orderStore;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleSubmit = async () => {
     const orderId = await orderStore.order();
 
     if (orderId) {

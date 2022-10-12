@@ -4,6 +4,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
+
+import theme from '../styles/theme';
 
 import Product from './Product';
 
@@ -16,15 +19,17 @@ describe('Products', () => {
     product, selectedCount, totalCost, canBuy,
   }) {
     render((
-      <Product
-        product={product}
-        selectedCount={selectedCount}
-        totalCost={totalCost}
-        canBuy={canBuy}
-        onClickAdd={handleClickAdd}
-        onClickReduce={handleClickReduce}
-        onClickBuy={handleClickBuy}
-      />
+      <ThemeProvider theme={theme}>
+        <Product
+          product={product}
+          selectedCount={selectedCount}
+          totalCost={totalCost}
+          canBuy={canBuy}
+          onClickAdd={handleClickAdd}
+          onClickReduce={handleClickReduce}
+          onClickBuy={handleClickBuy}
+        />
+      </ThemeProvider>
     ));
   }
 

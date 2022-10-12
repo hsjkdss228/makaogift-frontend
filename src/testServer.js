@@ -86,6 +86,8 @@ const server = setupServer(
     return response(context.status(400));
   }),
 
+  // TODO: request에서 필요한 것 꺼내쓰는 방법 (header라던가, json이라던가) 정리
+
   rest.post(`${apiBaseUrl}/order`, async (request, response, context) => {
     const { receiver, address } = await request.json();
 
@@ -136,11 +138,26 @@ const server = setupServer(
       );
     }
 
+    const accessToken = await request.headers.get('Authorization')
+      .substring('Bearer '.length);
+
+    if (accessToken) {
+      return response(
+        context.status(200),
+        context.json({
+          orderId: 1,
+        }),
+      );
+    }
+
+    if (!accessToken) {
+      return response(
+        context.status(400),
+      );
+    }
+
     return response(
-      context.status(200),
-      context.json({
-        orderId: 1,
-      }),
+      context.status(400),
     );
   }),
 );
