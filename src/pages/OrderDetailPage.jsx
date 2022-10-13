@@ -19,9 +19,11 @@ export default function OrderDetailPage() {
     transactionStore.fetchTransaction(orderId);
   }, []);
 
+  const { transaction } = transactionStore;
+
   return (
     <OrderDetail
-      transaction={transactionStore.transaction}
+      transaction={transaction}
     />
   );
 }

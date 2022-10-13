@@ -47,7 +47,7 @@ describe('Order', () => {
       const purchaseCost = product.price * purchaseCount;
       const receiver = '부모님';
       const address = '충남 금산군 금산읍 중도리 24 고려당한약원약업사';
-      const messageToSend = '지금은 가상의 숙박권이지만, 꼭 성공해서 모시고 싶습니다.';
+      const messageToSend = '꼭 성공해서 모시고 싶습니다.';
       const errors = {};
 
       it('주어진 데이터에 맞는 선물하기 컴포넌트 구성요소들을 화면에 출력', () => {

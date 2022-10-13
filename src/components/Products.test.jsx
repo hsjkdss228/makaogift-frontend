@@ -1,3 +1,4 @@
+/* eslint-disable object-property-newline */
 /* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 
@@ -13,12 +14,13 @@ describe('Products', () => {
   const handleClickPage = jest.fn();
   const handleClickProduct = jest.fn();
 
-  function renderProducts({ products, pagesCount }) {
+  function renderProducts({ products, pagesCount, currentPage }) {
     render((
       <ThemeProvider theme={theme}>
         <Products
           products={products}
           pagesCount={pagesCount}
+          currentPage={currentPage}
           onClickPage={handleClickPage}
           onClickProduct={handleClickProduct}
         />
@@ -31,51 +33,56 @@ describe('Products', () => {
       { id: 1, maker: '메이커', name: '네임', price: 100, description: '디스크립션' },
     ];
     const pagesCount = 1;
+    const currentPage = 1;
 
-    it('상품 제조사, 이름, 가격 표출', () => {
-      renderProducts({ products, pagesCount });
+    it('목록만큼의 상품 제조사, 상품 이름, 가격, 페이지 넘버 표출', () => {
+      renderProducts({ products, pagesCount, currentPage });
 
       screen.getByText('메이커');
       screen.getByText('네임');
       screen.getByText('100');
       screen.getByText('원');
+      screen.getByRole('button', { name: 1 });
     });
   });
 
   context('상품이 2페이지 이상 존재할 때', () => {
     const products = [
-      { id: 9, maker: 'maker 9', name: 'name 9', price: 900, description: 'description 9' },
-      { id: 10, maker: 'maker 10', name: 'name 10', price: 1000, description: 'description 10' },
-      { id: 11, maker: 'maker 11', name: 'name 11', price: 1100, description: 'description 11' },
-      { id: 12, maker: 'maker 12', name: 'name 12', price: 1200, description: 'description 12' },
-      { id: 13, maker: 'maker 13', name: 'name 13', price: 1300, description: 'description 13' },
+      ...Array(5).fill({}).map((_, index) => (
+        {
+          id: 9 + index, maker: '롯데', name: `젤리 ${9 + index}`,
+          price: 300, description: 'Candy Jelly Love~~~',
+        }
+      )),
     ];
     const pagesCount = 2;
+    const currentPage = 2;
 
-    it('상품 제조사, 이름, 가격 표출', () => {
-      renderProducts({ products, pagesCount });
+    it('보여주는 페이지의 상품 제조사, 상품 이름, 가격, 다른 모든 페이지 넘버 표출', () => {
+      renderProducts({ products, pagesCount, currentPage });
 
-      screen.getByText(/maker 9/);
-      screen.getByText(/maker 13/);
+      expect(screen.getAllByText(/젤리/).length).toBe(5);
       screen.getByRole('button', { name: 1 });
       screen.getByRole('button', { name: 2 });
     });
 
     context('상품 클릭 시', () => {
       it('상품 상세 페이지 이동 이벤트 핸들러 호출', () => {
-        renderProducts({ products, pagesCount });
+        jest.clearAllMocks();
+        renderProducts({ products, pagesCount, currentPage });
 
-        fireEvent.click(screen.getByText(/maker 9/));
-        expect(handleClickProduct).toBeCalled();
+        fireEvent.click(screen.getByText(/젤리 13/));
+        expect(handleClickProduct).toBeCalledWith(13);
       });
     });
 
     context('페이지 버튼 클릭 시', () => {
       it('페이지 전환 이벤트 핸들러 호출', () => {
-        renderProducts({ products, pagesCount });
+        jest.clearAllMocks();
+        renderProducts({ products, pagesCount, currentPage });
 
         fireEvent.click(screen.getByRole('button', { name: 1 }));
-        expect(handleClickProduct).toBeCalled();
+        expect(handleClickPage).toBeCalled();
       });
     });
   });
@@ -83,9 +90,10 @@ describe('Products', () => {
   context('상품이 존재하지 않을 때', () => {
     const products = [];
     const pagesCount = 0;
+    const currentPage = 0;
 
     it('예외 메세지 출력', () => {
-      renderProducts({ products, pagesCount });
+      renderProducts({ products, pagesCount, currentPage });
 
       screen.getByText('상품이 존재하지 않습니다.');
     });

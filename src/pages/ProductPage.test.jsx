@@ -61,7 +61,7 @@ describe('ProductPage', () => {
     ));
   }
 
-  context('상품 데이터가 주어지는 경우', () => {
+  context('링크로부터 상품 id가 주어지는 경우', () => {
     beforeEach(() => {
       productId = 1;
       product = {

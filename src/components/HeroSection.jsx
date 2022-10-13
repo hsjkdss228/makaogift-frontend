@@ -22,7 +22,6 @@ const DescriptionArea = styled.div`
   align-items: center;
   gap: 0.25em;
 
-
   p:nth-child(1), p:nth-child(2) {
     align-self: end;
   }

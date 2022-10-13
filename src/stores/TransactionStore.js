@@ -9,6 +9,7 @@ export default class TransactionStore extends Store {
 
     this.transactions = [];
     this.pagesCount = 0;
+    this.currentPage = 0;
 
     this.transaction = {};
   }
@@ -27,6 +28,11 @@ export default class TransactionStore extends Store {
 
   async fetchTransaction(id) {
     this.transaction = await apiService.fetchTransaction(id);
+    this.publish();
+  }
+
+  setCurrentPage(page) {
+    this.currentPage = page;
     this.publish();
   }
 }

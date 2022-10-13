@@ -10,8 +10,13 @@ const GlobalStyle = createGlobalStyle`
     color: #000;
   }
 
+  ul {
+    list-style: none;
+  }
+
   button {
     cursor: pointer;
   }
 `;
+
 export default GlobalStyle;

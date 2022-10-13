@@ -11,8 +11,6 @@ export default function ProductsPage() {
 
   const productStore = useProductStore();
 
-  const { products, pagesCount, currentPage } = productStore;
-
   useEffect(() => {
     // TODO: 새로고침하면 1페이지로 돌아가는 게 아니라 자신이 있는 페이지를 다시 로드하도록 하면 좋겠는데,
     //  useLocalStorage를 사용해볼 수 있을 것 같다.
@@ -21,6 +19,8 @@ export default function ProductsPage() {
     productStore.fetchProducts(1);
     productStore.setCurrentPage(1);
   }, []);
+
+  const { products, pagesCount, currentPage } = productStore;
 
   const navigateToProduct = (productId) => {
     navigate(`/products/${productId}`, {

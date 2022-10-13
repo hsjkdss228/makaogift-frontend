@@ -1,9 +1,6 @@
+import numberFormat from '../utils/numberFormat';
+
 export default function OrderDetail({ transaction }) {
-  console.log(transaction);
-
-  // TODO: table 구조가 나을지 ul과 dl을 조합하는 구조가 나을지
-  //  고민해볼 필요가 있겠다.
-
   return (
     <article>
       <p>{transaction.maker}</p>
@@ -16,7 +13,10 @@ export default function OrderDetail({ transaction }) {
           </li>
           <li>
             <dt>총 상품금액</dt>
-            <dd>{transaction.purchaseCost}</dd>
+            <dd>
+              {numberFormat(transaction.purchaseCost)}
+              원
+            </dd>
           </li>
           <li>
             <dt>구매일</dt>
@@ -24,7 +24,7 @@ export default function OrderDetail({ transaction }) {
           </li>
           <li>
             <dt>받는 분</dt>
-            <dd>{transaction.recipient}</dd>
+            <dd>{transaction.receiver}</dd>
           </li>
           <li>
             <dt>받는 분 주소</dt>
