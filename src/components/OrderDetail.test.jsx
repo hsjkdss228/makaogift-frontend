@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
+import theme from '../styles/theme';
 import OrderDetail from './OrderDetail';
 
 describe('OrderDetail', () => {
@@ -17,7 +19,11 @@ describe('OrderDetail', () => {
     };
 
     it('화면에 출력', () => {
-      render(<OrderDetail transaction={transaction} />);
+      render((
+        <ThemeProvider theme={theme}>
+          <OrderDetail transaction={transaction} />
+        </ThemeProvider>
+      ));
 
       screen.getByText(/하이트진로/);
       screen.getByText(/진로 소주병 바디필로우 100cm/);

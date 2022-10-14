@@ -49,7 +49,7 @@ export default function Products({
                       onClick={() => handleProductClick(product.id)}
                     >
                       <img
-                        src=""
+                        src={product.imageUrl}
                         alt="사진"
                       />
                       <DescriptionOutline>

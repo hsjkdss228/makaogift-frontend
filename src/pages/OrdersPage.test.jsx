@@ -28,6 +28,8 @@ jest.mock('../hooks/useTransactionStore', () => () => ({
 }));
 
 describe('OrdersPage', () => {
+  localStorage.setItem('accessToken', JSON.stringify('TOKEN'));
+
   function renderOrdersPage() {
     render((
       <ThemeProvider theme={theme}>

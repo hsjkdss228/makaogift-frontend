@@ -19,6 +19,7 @@ const ProductImage = styled.img`
   height: 30em;
   width: 30em;
   border: 1px dotted #999999;
+  object-fit: cover;
 `;
 
 const ProductDescription = styled.section`
@@ -109,6 +110,13 @@ const TotalCost = styled.p`
   gap: .5em;
 `;
 
+const RejectMessage = styled.p`
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  color: #F00;
+`;
+
 export default function Product({
   product, selectedCount, totalCost, canBuy,
   onClickAdd, onClickReduce, onClickBuy,
@@ -129,7 +137,7 @@ export default function Product({
     <Container>
       <ProductSection>
         <ProductImage
-          src=""
+          src={product.imageUrl}
           alt="상품 이미지"
         />
         <ProductDescription>
@@ -186,11 +194,11 @@ export default function Product({
           >
             선물하기
           </PrimaryButton>
+          {!canBuy ? (
+            <RejectMessage>잔액이 부족하여 선물하기가 불가합니다.</RejectMessage>
+          ) : null}
         </ProductDescription>
       </ProductSection>
-      {!canBuy ? (
-        <p>잔액이 부족하여 선물하기가 불가합니다.</p>
-      ) : null}
     </Container>
   );
 }

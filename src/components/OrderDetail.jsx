@@ -1,10 +1,38 @@
+import styled from 'styled-components';
 import numberFormat from '../utils/numberFormat';
+
+const Container = styled.article`
+  height: ${(props) => props.theme.pageSize.height};
+  margin: 5em 30em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  height: 20em;
+`;
+
+const Maker = styled.p`
+  margin-block: 1.5em 1em;
+  color: #999999;
+`;
+
+const Name = styled.p`
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 2em;
+`;
 
 export default function OrderDetail({ transaction }) {
   return (
-    <article>
-      <p>{transaction.maker}</p>
-      <p>{transaction.name}</p>
+    <Container>
+      <Image
+        src={transaction.imageUrl}
+        alt="사진"
+      />
+      <Maker>{transaction.maker}</Maker>
+      <Name>{transaction.name}</Name>
       <dl>
         <ul>
           <li>
@@ -36,6 +64,6 @@ export default function OrderDetail({ transaction }) {
           </li>
         </ul>
       </dl>
-    </article>
+    </Container>
   );
 }

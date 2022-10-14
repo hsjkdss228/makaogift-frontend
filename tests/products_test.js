@@ -1,71 +1,49 @@
 Feature('상품 목록 확인: 사용자가 스토어에서 상품 목록을 확인하는 시나리오');
 
-Scenario('상품이 존재하지 않는 경우', ({ I }) => {
-  // Given
-  I.resetProducts();
+// Scenario('상품이 존재하지 않는 경우', ({ I }) => {
+//   // When
+//   I.amOnPage('/products');
 
-  I.amOnPage('/');
+//   // Then
+//   I.seeHeroSection();
+//   I.see('상품이 존재하지 않습니다.');
+// });
 
-  // When
-  I.amOnPage('/products');
+// Scenario('상품이 8개 이하로 존재하는 경우', ({ I }) => {
+//   // // Given
+//   // I.setupProducts({ count: 3 });
 
-  // Then
-  I.see('회원가입');
-  I.see('로그인');
-  I.see('평범한 선물은 주기도 민망하다구요?');
-  I.see('작정하고 준비한');
-  I.see('마카오톡 선물하기 아이템');
-  I.see('마카오톡 선물하기에서만 볼 수 있는 특별템 기획전');
-  I.see('인기선물을 한 자리에 모았어요');
-  I.see('상품이 존재하지 않습니다.');
-});
+//   // I.amOnPage('/');
 
-Scenario('상품이 8개 이하로 존재하는 경우', ({ I }) => {
-  // Given
-  I.setupProducts({ count: 3 });
+//   // // When
+//   I.amOnPage('/products');
 
-  I.amOnPage('/');
-
-  // When
-  I.amOnPage('/products');
-
-  // Then
-  I.see('회원가입');
-  I.see('로그인');
-  I.see('평범한 선물은 주기도 민망하다구요?');
-  I.see('작정하고 준비한');
-  I.see('마카오톡 선물하기 아이템');
-  I.see('마카오톡 선물하기에서만 볼 수 있는 특별템 기획전');
-  I.see('인기선물을 한 자리에 모았어요');
-  I.see('제조사 1');
-  I.see('제조사 3');
-  I.see('상품 옵션명 1');
-  I.see('상품 옵션명 3');
-  I.see('100원');
-  I.see('300원');
-});
+//   // Then
+//   I.seeHeroSection();
+//   this.see('인기선물을 한 자리에 모았어요');
+//   I.see('1');
+//   I.dontSee('2');
+// });
 
 Scenario('상품이 8개 이상으로 존재하는 경우', ({ I }) => {
-  // Given
-  I.setupProducts({ count: 70 });
+  // // Given
+  // I.setupProducts({ count: 70 });
 
-  I.amOnPage('/');
+  // I.amOnPage('/');
 
   // When 1
   I.amOnPage('/products');
 
   // Then 1
-  I.see('상품 옵션명 1');
-  I.see('상품 옵션명 8');
+  I.see('네온테트라');
+  I.dontSee('피라루쿠');
   I.see('1');
-  I.see('9');
+  I.see('2');
 
   // When 2
-  I.click('9');
+  I.click('2');
 
   // Then 2
-  I.see('상품 옵션명 65');
-  I.see('상품 옵션명 70');
-  I.see('1');
-  I.see('9');
+  I.dontSee('네온테트라');
+  I.see('피라루쿠');
 });

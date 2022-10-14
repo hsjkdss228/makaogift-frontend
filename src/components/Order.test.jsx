@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
+import theme from '../styles/theme';
 import Order from './Order';
 
 const changeReceiverInput = jest.fn();
@@ -19,16 +21,18 @@ describe('Order', () => {
     receiver, address, messageToSend, errors, onSubmit,
   }) {
     render((
-      <Order
-        product={product}
-        purchaseCount={purchaseCount}
-        purchaseCost={purchaseCost}
-        receiver={receiver}
-        address={address}
-        messageToSend={messageToSend}
-        errors={errors}
-        onSubmit={onSubmit}
-      />
+      <ThemeProvider theme={theme}>
+        <Order
+          product={product}
+          purchaseCount={purchaseCount}
+          purchaseCost={purchaseCost}
+          receiver={receiver}
+          address={address}
+          messageToSend={messageToSend}
+          errors={errors}
+          onSubmit={onSubmit}
+        />
+      </ThemeProvider>
     ));
   }
 
@@ -64,8 +68,10 @@ describe('Order', () => {
 
         screen.getByText(/롯데호텔/);
         screen.getByText(/시그니엘 서울 그랜드 디럭스 스위트 더블 2인 1박2일 숙박권/);
-        screen.getByText(/구매수량: 2/);
-        screen.getByText(/총 상품금액: 2,000,000원/);
+        screen.getByText('구매수량:');
+        screen.getByText('2');
+        screen.getByText('총 상품금액:');
+        screen.getByText('2,000,000원');
 
         expect(screen.getAllByText('*').length).toBe(2);
         screen.getByText(/받는 분 성함/);

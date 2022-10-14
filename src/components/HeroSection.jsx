@@ -3,8 +3,9 @@ import styled from 'styled-components';
 const backgroundImageUrl = require('../assets/images/ProductsPageHero.jpeg');
 
 const Container = styled.section`
-  height: 20vh;
-  background-image: url(${(props) => props.backgroundImageUrl});
+  height: 30vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.backgroundImageUrl});
   opacity: 100%;
   background-size: 150%;
   background-position: left 5% bottom 55%;

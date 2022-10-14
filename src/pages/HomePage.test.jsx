@@ -14,6 +14,6 @@ test('HomePage', () => {
 
   screen.getByText(/무얼 선물할 지 고민이라면/);
   screen.getByText('특별한');
-  screen.getByText(/아이템을 전하세요/);
-  screen.getByText(/마카오 선물하기에서만 볼 수 있는 특별한 아이템/);
+  screen.getByText(/관상어들을 전하세요/);
+  screen.getByText(/마카오 선물하기에서만 볼 수 있는 특별한 관상어들/);
 });

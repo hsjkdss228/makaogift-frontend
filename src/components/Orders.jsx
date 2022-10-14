@@ -47,7 +47,7 @@ export default function Orders({
                       onClick={() => handleOrderDetailClick(transaction.id)}
                     >
                       <img
-                        src=""
+                        src={transaction.imageUrl}
                         alt="사진"
                       />
                       <DescriptionOutline>

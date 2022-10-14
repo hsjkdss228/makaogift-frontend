@@ -2,7 +2,9 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import context from 'jest-plugin-context';
+import { ThemeProvider } from 'styled-components';
 import OrderPage from './OrderPage';
+import theme from '../styles/theme';
 
 let product;
 let selectedCount;
@@ -47,7 +49,9 @@ jest.mock('../hooks/useUserStore', () => () => ({
 describe('OrderPage', () => {
   function renderOrderPage() {
     render((
-      <OrderPage />
+      <ThemeProvider theme={theme}>
+        <OrderPage />
+      </ThemeProvider>
     ));
   }
 
@@ -83,8 +87,10 @@ describe('OrderPage', () => {
 
       screen.getByText(/기아자동차/);
       screen.getByText(/K-511/);
-      screen.getByText(/구매수량: 3/);
-      screen.getByText(/총 상품금액: 222,000,000원/);
+      screen.getByText('구매수량:');
+      screen.getByText('3');
+      screen.getByText('총 상품금액:');
+      screen.getByText('222,000,000원');
 
       expect(screen.getByLabelText('받는 분 성함*').value).toContain('김정환 중사');
       expect(screen.getByLabelText('받는 분 주소*').value).toContain('영종도');

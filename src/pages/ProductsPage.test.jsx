@@ -53,6 +53,7 @@ describe('ProductsPage', () => {
             name: `아메리카노 ${1 + index}`,
             price: 1500,
             description: '밤샘에는 역시 1L 아메리카노에 샷추가',
+            imageUrl: 'Americano Image Url',
           }
         )),
       ];

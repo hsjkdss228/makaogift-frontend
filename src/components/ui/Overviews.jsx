@@ -9,7 +9,7 @@ const Overviews = styled.ul`
   row-gap: 1.5em;
   
   li {
-    height: 16em;
+    height: 20em;
   }
 
   button {
@@ -17,11 +17,15 @@ const Overviews = styled.ul`
     height: 100%;
     text-align: left;
     background: none;
-    border: 1px dotted #999999;
+    border: none;
   }
 
   img {
-    
+    width: 16em;
+    height: 16em;
+    object-fit: cover;
+    border-radius: 1em;
+    margin-bottom: 1em;
   }
 `;
 

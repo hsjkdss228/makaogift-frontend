@@ -22,7 +22,7 @@ describe('상품 목록 조회', () => {
   const productStore = new ProductStore();
 
   context('한번에 8개의 상품을 출력하고, 총 상품 개수가 3개인 상태에서 1번째 페이지를 확인하는 경우', () => {
-    it('3개의 상품을 출력', async () => {
+    it('3개의 상품에 대한 상태 저장', async () => {
       await productStore.fetchProducts(1);
       productStore.setCurrentPage(1);
 
@@ -30,13 +30,16 @@ describe('상품 목록 조회', () => {
       expect(productStore.products[0].name).toBe('객체지향의 사실과 오해');
       expect(productStore.products[1].name).toBe('The Pragmatic Programmer');
       expect(productStore.products[2].name).toBe('Test-Driven Development');
+      expect(productStore.products[0].imageUrl).toBe('Image Url 1');
+      expect(productStore.products[1].imageUrl).toBe('Image Url 2');
+      expect(productStore.products[2].imageUrl).toBe('Image Url 3');
       expect(productStore.pagesCount).toBe(1);
       expect(productStore.currentPage).toBe(1);
     });
   });
 
   context('한번에 8개의 상품을 출력하고, 총 상품 개수가 64개인 상태에서 5번째 페이지를 확인하는 경우', () => {
-    it('8개의 상품을 출력', async () => {
+    it('8개의 상품에 대한 상태 저장', async () => {
       await productStore.fetchProducts(5);
       productStore.setCurrentPage(5);
 
@@ -49,6 +52,8 @@ describe('상품 목록 조회', () => {
       expect(productStore.products[5].maker).toBe('제조사명 38');
       expect(productStore.products[6].maker).toBe('제조사명 39');
       expect(productStore.products[7].maker).toBe('제조사명 40');
+      expect(productStore.products[0].imageUrl).toBe('url 33');
+      expect(productStore.products[7].imageUrl).toBe('url 40');
       expect(productStore.pagesCount).toBe(8);
       expect(productStore.currentPage).toBe(5);
     });
@@ -70,6 +75,7 @@ describe('상품 상세 목록 조회', () => {
       expect(productStore.product.name).toBe('DOMANE AL 3');
       expect(productStore.product.price).toBe(1490000);
       expect(productStore.product.description).toBe('최고의 인듀어런스 자전거');
+      expect(productStore.product.imageUrl).toBe('DONAME AL 3 IMAGE URL');
     });
   });
 

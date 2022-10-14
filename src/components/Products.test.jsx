@@ -30,7 +30,8 @@ describe('Products', () => {
 
   context('상품이 1페이지 이내로 존재할 때', () => {
     const products = [
-      { id: 1, maker: '메이커', name: '네임', price: 100, description: '디스크립션' },
+      { id: 1, maker: 'SKT T1', name: 'FAKER', price: 2000000000,
+        description: 'Legend', imageUrl: 'FAKER Image Url' },
     ];
     const pagesCount = 1;
     const currentPage = 1;
@@ -38,9 +39,9 @@ describe('Products', () => {
     it('목록만큼의 상품 제조사, 상품 이름, 가격, 페이지 넘버 표출', () => {
       renderProducts({ products, pagesCount, currentPage });
 
-      screen.getByText('메이커');
-      screen.getByText('네임');
-      screen.getByText('100');
+      screen.getByText('SKT T1');
+      screen.getByText('FAKER');
+      screen.getByText('2,000,000,000');
       screen.getByText('원');
       screen.getByRole('button', { name: 1 });
     });

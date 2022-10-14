@@ -70,6 +70,7 @@ describe('ProductPage', () => {
         name: '[이벤트 30% 할인!!!] NAS 45큐브 프리미엄 8T 크리스탈 올디아망 어항',
         price: 270000,
         description: '네이처아쿠아 프리미엄 수조는 최고 품질의 Diamant 유리로 만들어집니다.',
+        imageUrl: 'Fish Tank Image Url',
       };
     });
 

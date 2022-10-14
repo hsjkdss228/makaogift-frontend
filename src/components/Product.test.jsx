@@ -41,6 +41,7 @@ describe('Products', () => {
       price: 10000,
       description: '베트남 원산의 하이그로필라 종류.'
       + ' 환경에 따라 잎의 끝단이 붉은 갈색으로 변화하는 자태를 뽐낸다.',
+      imageUrl: 'Water Plant Image Url',
     };
 
     context('선택한 상품의 개수가 1개인 경우', () => {
